@@ -9,8 +9,8 @@ from go_http.metrics import MetricsApiClient
 app = Flask(__name__)
 
 def attach_metrics(app):
-    app.metrics_api = MetricsApiClient
-        auth_token=os.environ['WEEDRAM_VUMIGO_API_TOKEN']
+    app.metrics_api = MetricsApiClient(
+        auth_token=os.environ['WEEDRAM_VUMIGO_API_TOKEN'],
         api_url="https://go.vumi.org/api/v1/go")
 
 attach_metrics(app)
