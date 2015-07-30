@@ -12,13 +12,14 @@ def attach_metrics(app):
     app.metrics_api = MetricsApiClient(
         auth_token=os.environ['WEEDRAM_VUMIGO_API_TOKEN'],
         api_url="https://go.vumi.org/api/v1/go")
+    app.metrics_list = os.environ['WEEDRAM_METRICS'].split(';')
 
 attach_metrics(app)
 
 @app.route('/')
 def hello_world():
     metrics = app.metrics_api.get_metric(
-        '.*', start='-7d', interval='1d', nulls='omit')
+        app.metrics_list[0], start='-7d', interval='1d', nulls='omit')
     metrics_html = str(metrics)
     html = """<html>
 <head>
